@@ -1,0 +1,132 @@
+<div class="container-fluid" style="padding: 10px">
+    <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip color="white" selected (click)="changeSelected($event)">Create Vendor<mat-icon>add_circle_outline</mat-icon></mat-chip>
+        <mat-chip color="white" (click)="exportData(12)">Export<mat-icon>download</mat-icon> </mat-chip>
+    </mat-chip-list>
+</div>
+
+<mat-tab-group>
+    
+    <mat-tab label="View Vendor">
+      <div class="row" style="margin:0px 0px 10px;overflow:auto;">
+        <div class="col-md-12 table-data-div">
+          <ng2-smart-table [settings]="vendorTableSettings" [source]="vendorList" (custom)="onCustomAction($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </mat-tab>
+
+</mat-tab-group>
+
+
+<div id="createVendorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('createVendorModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+            <div class="row" >
+                <div class="col-md-12">
+                    <label class="text-bold ">! All * fields are Mandatory.</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Code <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="vendorCode" style="text-transform: uppercase;">
+                </div>
+                <div class="col-md-6">
+                    <label class="text-bold ">Company <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="vendorName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Type <span>*</span> </label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="vendorTypeList"
+                        [(ngModel)]="selectedVendorTypeList" [settings]="singleSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-bold ">State <span>*</span> </label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="stateList"
+                        [(ngModel)]="selectedStateList" [settings]="multiSelectdropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Mobile <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="vendorMobile" OnlyNumber="true" LengthValidater="10">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <label style="color: transparent;display: block">filter</label>
+                    <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="submitVendorData()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>
+<div id="editVendorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('editVendorModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+            <div class="row" >
+                <div class="col-md-12">
+                    <label class="text-bold ">! All * fields are Mandatory.</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Code <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editVendorCode" style="text-transform: uppercase;" (input)="isDoAnyChange = true">
+                </div>
+                <div class="col-md-6">
+                    <label class="text-bold ">Company <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editVendorName" (input)="isDoAnyChange = true">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Type <span>*</span> </label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="vendorTypeList"
+                        [(ngModel)]="editSelectedVendorTypeList" [settings]="singleSelectdropdownSettings"
+                        (onSelect)="isDoAnyChange = true" (onSelectAll)="isDoAnyChange = true">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-bold ">State <span>*</span> </label>
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="stateList"
+                        [(ngModel)]="editSelectedStateList" [settings]="multiSelectdropdownSettings"
+                        (onSelect)="isDoAnyChange = true" (onSelectAll)="isDoAnyChange = true">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-bold ">Mobile <span>*</span> </label>
+                    <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editVendorMobile" OnlyNumber="true" LengthValidater="10" (input)="isDoAnyChange = true">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <label style="color: transparent;display: block">filter</label>
+                    <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" [(disabled)] = "!isDoAnyChange" (click)="updateVendorData()">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>

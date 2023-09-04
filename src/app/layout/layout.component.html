@@ -1,0 +1,105 @@
+<main class="Background" *ngIf='ShowLoading'>
+  <div class="loader">
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__ball"></div>
+  </div>    
+</main>
+
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #SideMenu class="sidenav" fixedInViewport
+  
+        [mode]="'side'"
+        [opened]="ToggleVariable">
+      <mat-toolbar style="background: white;">
+        <!-- <img src="assets/img/spaceworld.png" alt="assets.logo.svg" style="width:175px;height:70px"> -->
+        <img src="assets/img/crest.jpg" alt="assets.logo.svg">
+      </mat-toolbar>
+      <ul class="unselectable" style="height: 70%;">
+        <li *ngIf="empRoleId == '50'" >
+          <img src="assets/img/admin.png" alt="Admin Icon" style="width : 20px;border-radius: 10px"> 
+          <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+        </li>
+        <mat-menu #menu="matMenu">
+          <ul class="unselectable">
+            <li routerLink="m2" [routerLinkActive] = '["ActiveRoute"]' > 
+                Employee
+            </li>
+            <li routerLink="m3" [routerLinkActive] = '["ActiveRoute"]' > 
+                Operational
+            </li>
+            <li routerLink="nbs" [routerLinkActive] = '["ActiveRoute"]' > 
+                NBS
+            </li>
+            <li routerLink="create-vendor" [routerLinkActive] = '["ActiveRoute"]' > 
+                Vendor
+            </li>
+            <li routerLink="create-ptw-raiser" [routerLinkActive] = '["ActiveRoute"]' > 
+                Raiser
+            </li>
+            <li routerLink="create-supervisor" [routerLinkActive] = '["ActiveRoute"]' > 
+                Supervisor
+            </li>
+          </ul>
+        </mat-menu>
+        <!-- PTW Admin -->
+        <li routerLink="create-vendor" [routerLinkActive] = '["ActiveRoute"]' *ngIf="empRoleId == '62'" >
+          <img src="assets/img/admin.png" alt="vendor Icon" style="width : 20px;border-radius: 10px"> 
+          Vendor
+        </li>
+        <!-- CDH, O&M Lead, Admin, SpaceWorld, Management, CB, CBH, Corporate OnM lead -->
+        <li routerLink="dashboard" [routerLinkActive] = '["ActiveRoute"]' *ngIf="isDashMenuShow"> 
+          <img src="assets/img/graph.jpg" alt="Dashboard" style="width : 20px;border-radius: 10px"> 
+          Dashboard
+        </li>
+        <!-- CBH -->
+        <li routerLink="m12" [routerLinkActive] = '["ActiveRoute"]' *ngIf="empRoleId == '46'"> 
+          <img src="assets/img/raise.jpg" alt="Raise SR" style="width : 20px;border-radius: 10px"> 
+            Raise SR
+        </li>
+        <!-- Vendor, PTW Admin -->
+        <li routerLink="create-ptw-raiser" [routerLinkActive] = '["ActiveRoute"]' *ngIf="empRoleId == '53' || empRoleId == '62'"> 
+          <img src="assets/img/admin.png" alt="PTW Raiser" style="width : 20px;border-radius: 10px"> 
+            Raiser
+        </li>
+        <!-- Vendor, PTW Raiser, PTW Admin -->
+        <li routerLink="create-supervisor" [routerLinkActive] = '["ActiveRoute"]' *ngIf="empRoleId == '53' || empRoleId == '61' || empRoleId == '62'"> 
+          <img src="assets/img/admin.png" alt="Supervisor" style="width : 20px;border-radius: 10px"> 
+            Supervior
+        </li>
+        <!-- Vendor or PTW Raiser -->
+        <li routerLink="m13" [routerLinkActive] = '["ActiveRoute"]' *ngIf="empRoleId == '53' || empRoleId == '61'"> 
+          <img src="assets/img/raise.jpg" alt="Raise PTW" style="width : 20px;border-radius: 10px"> 
+            Raise PTW
+        </li>
+        
+        <li [routerLink]="[menu.routerLink]" [routerLinkActive] = '["ActiveRoute"]' *ngFor="let menu of menuList"> 
+            <img [src]="[menu.icon]" alt="icon" style="width : 20px;border-radius: 10px"> 
+            {{menu.menuName}}
+        </li>
+        <!-- CDH, O&M Lead, Admin, SpaceWorld, Management, CB, CBH, Corporate OnM lead -->
+        <li routerLink="m11" [routerLinkActive] = '["ActiveRoute"]' *ngIf="isReportMenuShow"> 
+          <img src="assets/img/excel.jpg" alt="Excel Icon" style="width : 20px;border-radius: 10px"> 
+            Report
+        </li>
+        
+      </ul>
+      <ul>
+        <li>
+          <button mat-button (click)='Logout()' class="logout-btn">
+          {{empName}} || Logout 
+          <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div style="background: white;min-height: 96%;margin: 10px;border: 1px solid #efe1e1;">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

@@ -1,0 +1,121 @@
+<div class="container-fluid" style="padding: 10px">
+    <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip color="white" selected (click)="changeSelected($event)" *ngIf="loginEmpRoleId == '53' ">
+          Create Raiser <mat-icon>add_circle_outline</mat-icon>
+        </mat-chip>
+        <mat-chip color="white" (click)="exportData(13)">
+          Export <mat-icon>download</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</div>
+
+<mat-tab-group>
+    
+    <mat-tab label="View Raiser">
+      <div class="row" style="margin:0px 0px 10px;overflow:auto;">
+        <div class="col-md-12 table-data-div">
+          <ng2-smart-table [settings]="raiserTableSettings" [source]="raiserList" (custom)="onCustomAction($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </mat-tab>
+
+</mat-tab-group>
+
+
+<div id="createRaiserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('createRaiserModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+          <div class="row" >
+            <div class="col-md-12">
+              <label class="text-bold ">! All * fields are Mandatory.</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="text-bold ">Name <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="raiserName">
+            </div>
+            <div class="col-md-6">
+                <label class="text-bold ">Mobile <span>*</span> </label>
+                <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="mobile" OnlyNumber="true" LengthValidater="10">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="text-bold ">Whatsapp Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="whatsappNumber" OnlyNumber="true" LengthValidater="10">
+            </div>
+
+            <div class="col-md-6">
+              <label class="text-bold ">Aadhar Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="aadharNumber" OnlyNumber="true" LengthValidater="12">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="submitRaiserData()">Submit</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="editRaiserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('editRaiserModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+          <div class="row" >
+            <div class="col-md-12">
+              <label class="text-bold ">! All * fields are Mandatory.</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="text-bold ">Name <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editRaiserName" (input)="isDoAnyChange = true">
+            </div>
+            <div class="col-md-6">
+                <label class="text-bold ">Mobile <span>*</span> </label>
+                <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editMobile" OnlyNumber="true" LengthValidater="10" (input)="isDoAnyChange = true">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="text-bold ">Whatsapp Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editWhatsappNumber" OnlyNumber="true" LengthValidater="10" (input)="isDoAnyChange = true">
+            </div>
+
+            <div class="col-md-6">
+              <label class="text-bold ">Aadhar Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editAadharNumber" OnlyNumber="true" LengthValidater="12" (input)="isDoAnyChange = true">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" [disabled]="!isDoAnyChange" (click)="updateRaiserData()">Save</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

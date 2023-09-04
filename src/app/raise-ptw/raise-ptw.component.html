@@ -1,0 +1,190 @@
+<div class="row" >
+    <div class="col-md-12">
+      <label class="text-bold">! All * fields are Mandatory.</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <label class="text-bold">Circle <span>*</span> </label>
+        <ng-multiselect-dropdown [placeholder]="'Select'" [settings]="singleSelectdropdownSettings"
+            [data]="circleList" [(ngModel)]="selectedCircleList" 
+            (onSelect)="onSelectOrDeselectCircle($event)" (onDeSelect)="onSelectOrDeselectCircle($event)">
+        </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-4">
+        <label class="text-bold">Site Name <span>*</span> </label>
+        <ng-multiselect-dropdown [placeholder]="'Select'" [settings]="singleSelectdropdownSettings" 
+            [data]="siteIdNameList" [(ngModel)]="selectedSiteIdNameList">
+        </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-3">
+        <label class="text-bold">Site type <span>*</span> </label>
+        <ng-multiselect-dropdown [placeholder]="'Select'" [settings]="singleSelectdropdownSettings" 
+            [data]="siteTypeList" [(ngModel)]="selectedSiteTypeList">
+        </ng-multiselect-dropdown>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <label class="text-bold">Work Start Datetime <span>*</span> </label>
+        <input type="datetime-local" class="form-control input-sm tom-border-radius forBlank" [(ngModel)]="workStartDatetime" [min]="ptwRaiseDatetime" [max]="maxDatetime" (change)="workEndDatetime =''"/>
+    </div>
+    <div class="col-md-3">
+        <label class="text-bold">Work End Datetime <span>*</span> </label>
+        <input type="datetime-local" class="form-control input-sm tom-border-radius forBlank" [(ngModel)]="workEndDatetime" [disabled]="workStartDatetime == '' " [min]="workStartDatetime"/>
+    </div>
+</div>
+<div class="container-fluid">
+    <fieldset class="the-fieldset">
+        <legend class="the-legend"><label class="text-bold ">Supervisor at site</label></legend>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="text-bold">Name <span>*</span> </label>
+                <select [(ngModel)]="supervisorName" class="form-control input-sm tom-border-radius forBlankSelect" (change)="selectSupervisorName($event)">
+                    <option value="">Select</option>
+                    <option value="{{sl.name}}" [attr.mobile]="sl.mobile" 
+                    [attr.whatsapp]="sl.whatsapp" [attr.aadharCard]="sl.aadharCard" 
+                    [attr.heightPtwCriteria] = "sl.heightPtwCriteria" *ngFor="let sl of supervisorList">{{sl.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="text-bold">Aadhar Card<span>*</span> </label>
+                <input text="text" OnlyNumber="true" maxlength="12" [(ngModel)]="supervisorAadhar" class="form-control input-sm tom-border-radius forBlank" [disabled]=true/>
+            </div>
+            <div class="col-md-3">
+                <label class="text-bold">Mobile Number<span>*</span> </label>
+                <input text="text" OnlyNumber="true" maxlength="10" [(ngModel)]="supervisorMobile" class="form-control input-sm tom-border-radius forBlank" [disabled]=true/>
+            </div>
+            <div class="col-md-3">
+                <label class="text-bold">Whatsapp Number<span>*</span> </label>
+                <input text="text" OnlyNumber="true" maxlength="10" [(ngModel)]="supervisorWhatsapp" class="form-control input-sm tom-border-radius forBlank" [disabled]=true/>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <label class="text-bold">PTW type<span>*</span> </label>
+        <select [(ngModel)]="ptwType" class="form-control input-sm tom-border-radius forBlankSelect" (change)="selectPtwType()">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of ptwTypeList">{{at}}</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="text-bold" *ngIf="ptwType !='' ">{{ptwType}} Activity<span>*</span> </label>
+        <select *ngIf="height" class="form-control input-sm tom-border-radius forBlankSelect heightActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of heightActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="electrical" class="form-control input-sm tom-border-radius forBlankSelect electricalActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of electricalActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="matHandling" class="form-control input-sm tom-border-radius forBlankSelect matHandlingActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of matHandlingActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="ofcRoute" class="form-control input-sm tom-border-radius forBlankSelect ofcRouteActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of ofcRouteActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="confined" class="form-control input-sm tom-border-radius forBlankSelect confinedActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of confinedActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="hotWork" class="form-control input-sm tom-border-radius forBlankSelect hotWorkActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of hotWorkActivityList">{{at}}</option>
+        </select>
+        <select *ngIf="siteAccess" class="form-control input-sm tom-border-radius forBlankSelect siteAccessActivity">
+            <option value="">Select</option>
+            <option value="{{at}}" *ngFor="let at of siteAccessActivityList">{{at}}</option>
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <label class="text-bold">Is PO available <span>*</span> </label>
+        <select [(ngModel)]="isPoAvailable" class="form-control input-sm tom-border-radius forBlankSelect">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+    <div class="col-md-3" *ngIf="isPoAvailable == 'Yes'">
+        <label class="text-bold">PO Number <span>*</span> </label>
+        <input type="text" [(ngModel)]="poNumber" OnlyNumber="true" class="form-control input-sm tom-border-radius forBlank" />
+    </div>
+    <div class="col-md-3" *ngIf="isPoAvailable == 'Yes'">
+        <label class="text-bold">Date of PO <span>*</span> </label>
+        <input type="date" [(ngModel)]="dateOfPo" class="form-control input-sm tom-border-radius forBlank" [max]="todayDate" />
+    </div>
+    <div class="col-md-3">
+        <label class="text-bold">No of workers to required <span>*</span> </label>
+        <select [(ngModel)]="requiredWorkers" class="form-control input-sm tom-border-radius forBlankSelect">
+            <option value="">Select</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option>12-16</option><option>17-20</option><option>21-25</option>
+            <option>26-30</option><option>30+</option>
+        </select>
+    </div>
+</div>
+<div class="row" *ngIf="false">
+    <div class="col-md-4">
+        <label class="text-bold">SST Report / Pre built report Available <span>*</span> </label>
+        <select [(ngModel)]="sstReport" class="form-control input-sm tom-border-radius forBlankSelect">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+            <option>NA</option>
+        </select>
+    </div>
+    <div class="col-md-4" *ngIf="sstReport == 'Yes' ">
+        <label class="text-bold">Upload SST Report / Pre built report Available <span>*</span></label>
+        <input type = "file" id="sstReport" accept="image/*" class="form-control input-sm tom-border-radius forBlankFile" 
+        (change)="changeListener($event,1)"/>
+    </div>
+    <div class="col-md-4" *ngIf="sstReportBase64 != '' ">
+        <img [src] = "sstReportBase64" class="uploadImg" (click)="bigImg(1)"/>
+    </div>
+</div>
+<div class="row" *ngIf="false">
+    <div class="col-md-4">
+        <label class="text-bold">Structure (Pole) Drawing available <span>*</span> </label>
+        <select [(ngModel)]="strDrawing" class="form-control input-sm tom-border-radius forBlankSelect">
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+            <option>NA</option>
+        </select>
+    </div>
+    <div class="col-md-4" *ngIf="strDrawing == 'Yes' ">
+        <label class="text-bold">Upload Structure (Pole) Drawing available <span>*</span> </label>
+        <input type = "file" id="strDrawing" accept="image/*" class="form-control input-sm tom-border-radius forBlankFile" 
+        (change)="changeListener($event,2)"/>
+    </div>
+    <div class="col-md-4" *ngIf="strDrawingBase64 != '' ">
+        <img [src] = "strDrawingBase64" class="uploadImg" (click)="bigImg(2)"/>
+    </div>
+</div>
+<div class="container-fluid">
+    <fieldset class="the-fieldset">
+        <legend class="the-legend"><label class="text-bold">Declaration</label></legend>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="text-bold"> 
+                    <input type="checkbox" [(ngModel)]="declaration" class="forUnchecked"/>
+                    {{descriptionText}}
+                </label>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- <label style="color: transparent;display: block">0</label> -->
+        <button class="btn text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="submitPtw()" >Submit</button>
+    </div>
+</div>

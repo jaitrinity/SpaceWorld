@@ -1,0 +1,23 @@
+<div class="row" >
+    <div class="col-md-12">
+      <label class="text-bold">! All * fields are Mandatory.</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3" *ngFor="let ss of siteSurveyCheckpoint">
+        <label class="text-bold ">{{ss.description}} <span>*</span> </label>
+        <input type="text" *ngIf="ss.typeId == 1" class="form-control input-sm tom-border-radius forBlank" placeholder="{{ss.description}}" id="cp_{{ss.chkpId}}"/>
+        <input type="date" *ngIf="ss.typeId == 7" class="form-control input-sm tom-border-radius forBlank" placeholder="{{ss.description}}" [max]="todayDate" id="cp_{{ss.chkpId}}"/>
+        <input type="text" OnlyNumber="true" *ngIf="ss.typeId == 3" class="form-control input-sm tom-border-radius forBlank" placeholder="{{ss.description}}" id="cp_{{ss.chkpId}}"/>
+        <select *ngIf="ss.typeId == 10" class="form-control input-sm tom-border-radius forBlankSelect"  id="cp_{{ss.chkpId}}">
+            <option value=" ">Select</option>
+            <option *ngFor="let op of ss.value?.split(',')">{{op}}</option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label style="color: transparent;display: block">0</label>
+        <button class="btn text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="submitSiteSurvey()" >Submit</button>
+    </div>
+</div>

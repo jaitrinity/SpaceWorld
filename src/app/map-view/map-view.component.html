@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>
+            <label class="text-bold">
+                <span mat-button [matMenuTriggerFor]="menu1">
+                    SPOI Alarm Count : {{spoiAlarmCount}}
+                </span>,
+            </label>&nbsp;
+            <label class="text-bold">
+                <span mat-button [matMenuTriggerFor]="menu2">
+                    I-Protect Alarm Count : {{iProAlarmCount}}
+                </span>
+            </label>
+        </h3>
+        
+        <mat-menu #menu1="matMenu">
+            <div class="alarms" [ngClass]= "{'isAlarm' : sp.isAlarm == 1}" *ngFor="let sp of spoiAlarmList" (click)="openWindow(sp.index)">
+                {{sp.siteName}}
+            </div>
+        </mat-menu>
+        <mat-menu #menu2="matMenu">
+            <div class="alarms" [ngClass]= "{'isAlarm' : ip.isAlarm == 1}" *ngFor="let ip of iProAlarmList" (click)="openWindow(ip.index)">
+                {{ip.siteName}}
+            </div>
+        </mat-menu>
+    </div>
+    <div class="col-md-12">
+        <agm-map [zoom]="zoom" [latitude] = "lat" [longitude] = "lng" [zoomControl] = "true" [fullscreenControl]="true">
+            <agm-marker 
+            [iconUrl]="{
+                url : m.iconUrl,
+                scaledSize : {
+                    width: 40,
+                    height: 50
+                }
+            }"
+            [latitude]="m.lat" 
+            [longitude]="m.lng" 
+            [animation]="m.animation"
+            *ngFor="let m of markers;let i = index" 
+            (markerClick)="clickedMarker(infoWindow, i)" >
+                <agm-info-window #infoWindow 
+                [isOpen]="isInfoWindowOpen(i)">
+                    <div [innerHTML]="m.label"></div>
+                </agm-info-window>
+            </agm-marker>
+        </agm-map>
+    </div>
+</div>

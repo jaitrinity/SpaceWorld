@@ -1,0 +1,393 @@
+<div class="container-fluid" style="padding: 10px" *ngIf="loginEmpRoleId == '53' || loginEmpRoleId == '61' || loginEmpRoleId == '62' ">
+    <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip color="white" selected (click)="changeSelected($event)" >
+          Create Supervisor <mat-icon>add_circle_outline</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</div>
+
+<mat-tab-group>
+    
+    <mat-tab label="View Supervisor">
+      <div class="row" style="margin:0px 0px 10px;">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip color="white" (click)="exportData(14)">
+            Export <mat-icon>download</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="row" style="margin:0px 0px 10px;overflow:auto;">
+        <div class="col-md-12 table-data-div">
+          <ng2-smart-table [settings]="supervisorTableSettings" [source]="supervisorList" (custom)="onCustomAction($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Supervisor Training" *ngIf="loginEmpRoleId == '50'">
+      <div class="row" style="margin:0px 0px 10px;">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip color="white" (click)="exportData(18)">
+            Export <mat-icon>download</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="row" style="margin:0px 0px 10px;overflow:auto;">
+        <div class="col-md-12 table-data-div">
+          <ng2-smart-table [settings]="supervisorTraining" [source]="supervisorTrainingList" class="empLocMappClass" (custom)="onCustomAction($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </mat-tab>
+
+</mat-tab-group>
+
+
+  <div id="createSuperviorModal" class="modal fade" role="dialog">
+    <!-- <div class="modal-dialog modal-lg" style="max-width:  1000px !important"> -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('createSuperviorModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+          <div class="row" >
+            <div class="col-md-12">
+              <label class="text-bold">! All * fields are Mandatory.</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label class="text-bold">Name <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="supervisorName">
+            </div>
+            <div class="col-md-3">
+                <label class="text-bold">Mobile <span>*</span> </label>
+                <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="mobile" OnlyNumber="true" LengthValidater="10">
+            </div>
+
+            <div class="col-md-3">
+              <label class="text-bold">Whatsapp Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="whatsappNumber" OnlyNumber="true" LengthValidater="10">
+            </div>
+
+            <div class="col-md-3">
+              <label class="text-bold">Aadhar Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="aadharNumber" OnlyNumber="true" LengthValidater="12">
+            </div>
+          </div>
+
+          <div class="container-fluid" >
+            <fieldset class="the-fieldset">
+              <legend class="the-legend">
+                <label class="text-bold">
+                  Trainings 
+                </label>
+              </legend>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-bold">{{supTraDesc}}</label>
+                </div>
+              </div>
+              <div class="row" *ngFor="let r of trainingRowArr">
+                <div class="col-md-2">
+                  <label class="text-bold">Training Type {{r}} <span>*</span></label>
+                  <div class="input-group">
+                    <span>
+                      <i class="fa fa-trash-o text-bold" (click)="delMore(r)" *ngIf="trainingRowArr.length > 1"></i>
+                    </span> &nbsp;
+                    <select class="form-control input-sm tom-border-radius forBlank trType" (change)="changeTrainingType(r,1)" id="tr-type-{{r}}" attr.srId="{{r}}">
+                      <option value="">Select</option>
+                      <option *ngFor="let trList of trainingTypeList">{{trList}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2 trCompanyName trCompanyName{{r}}">
+                  <label class="text-bold">Company Name (Training Provide) {{r}} <span class="trCompanyName _trCompanyName{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-company-name-{{r}}"/>
+                </div>
+                <div class="col-md-2 trIdNo trIdNo{{r}}">
+                  <label class="text-bold">Training Id No {{r}} <span class="trIdNo _trIdNo{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-id-no-{{r}}"/>
+                </div>
+                <div class="col-md-2 trMode trMode{{r}}">
+                  <label class="text-bold">Mode of training {{r}} <span class="trMode _trMode{{r}}">*</span></label>
+                  <select class="form-control input-sm tom-border-radius forBlank" id="tr-mode-{{r}}">
+                    <option value="">Select</option>
+                    <option>Physical</option>
+                    <option>Online</option>
+                  </select>
+                </div>
+                <div class="col-md-2 trGivenBy trGivenBy{{r}}">
+                  <label class="text-bold">Training given by {{r}} <span class="trGivenBy _trGivenBy{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-given-by-{{r}}"/>
+                </div>
+                <div class="col-md-2 trDate trDate{{r}}">
+                  <label class="text-bold">Date of Training {{r}} <span class="trDate _trDate{{r}}">*</span></label>
+                  <input type="date" class="form-control input-sm tom-border-radius forBlank" id="tr-date-{{r}}"/>
+                </div>
+                <div class="col-md-2 trExDate trExDate{{r}}">
+                  <label class="text-bold">Expire date of Training {{r}} <span class="trExDate _trExDate{{r}}">*</span></label>
+                  <input type="date" class="form-control input-sm tom-border-radius forBlank" id="tr-ex-date-{{r}}"/>
+                </div>
+                <div class="col-md-2 trPic trPic{{r}}">
+                  <label class="text-bold">External Certification / Training Snaps {{r}} <span class="trPic _trPic{{r}}">*</span></label>
+                  <input type="hidden" id="hidden-tr-pic-{{r}}" class="forBlank"/>
+                  <input type="file" accept="image/*" class="form-control input-sm tom-border-radius forBlank" id="tr-pic-{{r}}" 
+                  (change)="changeListener($event,r)"/>
+                </div>
+                <input type="hidden" id="trTypeCombo{{r}}"/>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <button class="btn text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="addMore()">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="submitSupervisorData()">Submit</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="editSuperviorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl" >
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title">{{editSupervisorName}}</h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('editSuperviorModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+          <div class="row" >
+            <div class="col-md-12">
+              <label class="text-bold">! All * fields are Mandatory.</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label class="text-bold">Name <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editSupervisorName" (input)="isDoAnyChange = true">
+            </div>
+            <div class="col-md-3">
+                <label class="text-bold">Mobile <span>*</span> </label>
+                <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editMobile" OnlyNumber="true" LengthValidater="10" (input)="isDoAnyChange = true">
+            </div>
+            <div class="col-md-3">
+              <label class="text-bold">Whatsapp Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editWhatsappNumber" OnlyNumber="true" LengthValidater="10" (input)="isDoAnyChange = true">
+            </div>
+
+            <div class="col-md-3">
+              <label class="text-bold">Aadhar Number <span>*</span> </label>
+              <input type="text" class="form-control input-sm tom-border-radius" [(ngModel)]="editAadharNumber" OnlyNumber="true" LengthValidater="12" (input)="isDoAnyChange = true">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" [(disabled)] = "!isDoAnyChange" (click)="updateSupervisorData()">Save</button>
+            </div>
+          </div>
+          <hr>
+          <div class="container-fluid" >
+            <fieldset class="the-fieldset fieldset-edit-view">
+              <legend class="the-legend">
+                <label class="text-bold">
+                  Trainings 
+                  <button *ngIf="loginEmpRoleId == '53' || loginEmpRoleId == '61' || loginEmpRoleId == '62'" class="btn text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="openAnyModal('addTrainingModal')">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </label>
+              </legend>
+              <div *ngIf="viewTrainingList.length == 0; else elseBlock">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h3 class="text-warning"><i>! No Record found</i></h3>
+                  </div>
+                </div>
+              </div>
+              <ng-template #elseBlock>
+                <table class="table table-bordered">
+                  <thead class="text-bold text-center">
+                    <tr>
+                      <td>SR</td>
+                      <td>Training Type</td>
+                      <td>Company Name (Training Provide)</td>
+                      <td>Training Id</td>
+                      <td>Mode of training</td>
+                      <td>Training given by</td>
+                      <td>Date of Training</td>
+                      <td>Expire date of Training</td>
+                      <td>External Certification / Training Snaps</td>
+                      <td>Status</td>
+                      <td>Reject Reason</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tr of viewTrainingList;let trIndex = index">
+                      <td>{{trIndex + 1}}</td>
+                      <td>
+                        <div class="input-group">
+                          <span *ngIf="tr.trStatus == 0">
+                            <i class="fa fa-trash-o text-bold" (click)="deleteTraining(tr.id, tr.trType)"></i>
+                          </span> &nbsp;
+                          <span>{{tr.trType}}</span>
+                        </div>
+                      </td>
+                      <td>{{tr.trCompanyName}}</td>
+                      <td>{{tr.trIdNo}}</td>
+                      <td>{{tr.trMode}}</td>
+                      <td>{{tr.trGivenBy}}</td>
+                      <td>{{tr.trDate}}</td>
+                      <td>{{tr.trExDate}}</td>
+                      <td>
+                        <img [src] = "tr.trPic" class="small-image img-thumbnail" *ngIf="tr.trPic !=null && tr.trPic != ''" (click)="bigImg(tr.trPic)">
+                      </td>
+                      <td>{{tr.statusValue}}</td>
+                      <td>{{tr.rejectReason}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-template>
+            </fieldset>
+          </div>
+
+          
+        </div>
+        
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addTrainingModal" class="modal fade" role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title">Add Training</h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('addTrainingModal')">Close</button>
+        </div>
+        <div class="modal-body det-modal-body">
+          <div class="container-fluid">
+            <fieldset class="the-fieldset">
+              <legend class="the-legend">
+                <label class="text-bold">
+                  Trainings 
+                </label>
+              </legend>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-bold">{{supTraDesc}}</label>
+                </div>
+              </div>
+              <div class="row" *ngFor="let r of trainingRowArr">
+                <div class="col-md-2">
+                  <label class="text-bold">Training Type {{r}} <span>*</span></label>
+                  <div class="input-group">
+                    <span>
+                      <i class="fa fa-trash-o text-bold" (click)="delMore(r)" *ngIf="trainingRowArr.length > 1"></i>
+                    </span> &nbsp;
+                    <select class="form-control input-sm tom-border-radius forBlank trTypeMore" (change)="changeTrainingType(r,2)" id="tr-type-more-{{r}}" attr.srId="{{r}}">
+                      <option value="">Select</option>
+                      <option *ngFor="let trList of trainingTypeList">{{trList}}</option>
+                    </select>
+                  </div>
+                  
+                </div>
+                <div class="col-md-2 trCompanyNameMore trCompanyNameMore{{r}}">
+                  <label class="text-bold">Company Name (Training Provide) {{r}} <span class="trCompanyNameMore _trCompanyNameMore{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-company-name-more-{{r}}"/>
+                </div>
+                <div class="col-md-2 trIdNoMore trIdNoMore{{r}}">
+                  <label class="text-bold">Training Id No {{r}} <span class="trIdNoMore _trIdNoMore{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-id-no-more-{{r}}"/>
+                </div>
+                <div class="col-md-2 trModeMore trModeMore{{r}}">
+                  <label class="text-bold">Mode of training {{r}} <span class="trModeMore _trModeMore{{r}}">*</span></label>
+                  <select class="form-control input-sm tom-border-radius forBlank" id="tr-mode-more-{{r}}">
+                    <option value="">Select</option>
+                    <option>Physical</option>
+                    <option>Online</option>
+                  </select>
+                </div>
+                <div class="col-md-2 trGivenByMore trGivenByMore{{r}}">
+                  <label class="text-bold">Training given by {{r}} <span class="trGivenByMore _trGivenByMore{{r}}">*</span></label>
+                  <input type="text" class="form-control input-sm tom-border-radius forBlank" id="tr-given-by-more-{{r}}"/>
+                </div>
+                <div class="col-md-2 trDateMore trDateMore{{r}}">
+                  <label class="text-bold">Date of Training {{r}} <span class="trDateMore _trDateMore{{r}}">*</span></label>
+                  <input type="date" class="form-control input-sm tom-border-radius forBlank" id="tr-date-more-{{r}}"/>
+                </div>
+                <div class="col-md-2 trExDateMore trExDateMore{{r}}">
+                  <label class="text-bold">Expire date of Training {{r}} <span class="trExDateMore _trExDateMore{{r}}">*</span></label>
+                  <input type="date" class="form-control input-sm tom-border-radius forBlank" id="tr-ex-date-more-{{r}}"/>
+                </div>
+                <div class="col-md-2 trPicMore trPicMore{{r}}">
+                  <label class="text-bold">External Certification / Training Snaps {{r}} <span class="trPicMore _trPicMore{{r}}">*</span></label>
+                  <input type="hidden" id="hidden-tr-pic-more-{{r}}" class="forBlank"/>
+                  <input type="file" accept="image/*" class="form-control input-sm tom-border-radius forBlank" id="tr-pic-more-{{r}}" 
+                  (change)="changeListener($event,r)"/>
+                </div>
+                <input type="hidden" id="trTypeComboMore{{r}}"/>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <button class="btn text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="addMore()">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="addTrainingData()">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rejectModal" class="modal fade" role="dialog" >
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header" style="padding: 10px !important;">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('rejectModal')">Close</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="text-bold">Reject Reason</label>
+              <textarea [(ngModel)]="rejectReason" rows="5" class="form-control tom-border-radius"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label style="color: transparent;display: block">filter</label>
+              <button class="btn text-bold text-white tom-border-radius" [ngStyle]="{'background-color':button}" (click)="rejectTraining(2)">Reject</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,65 @@
+<main class="Background" *ngIf='ShowLoading'>
+  <div class="loader">
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__bar"></div>
+      <div class="loader__ball"></div>
+  </div>    
+</main>
+
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #SideMenu class="sidenav" fixedInViewport
+  
+        [mode]="'side'"
+        [opened]="ToggleVariable">
+      <mat-toolbar style="background: white;">
+        <!-- <img src="assets/img/spaceworld.png" alt="assets.logo.svg" style="width:175px;height:70px"> -->
+        <img src="assets/img/crest.jpg" alt="assets.logo.svg">
+      </mat-toolbar>
+      <ul class="unselectable" style="height: 70%;">
+        <li routerLink="alarm" [routerLinkActive] = '["ActiveRoute"]'>
+          <img src="assets/img/maps.png" alt="Excel Icon" style="width : 20px;border-radius: 10px"> 
+          Alarm
+        </li>
+        <!-- <li (click)="openAnyModal('dashboardModal')">  -->
+        <li (click)="openDashboard()"> 
+          <img src="assets/img/graph.jpg" alt="Dashboard" style="width : 20px;border-radius: 10px"> 
+          Dashboard &nbsp; <i class="fa fa-external-link" aria-hidden="true" style="font-size: 14px;"></i>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <button mat-button (click)='Logout()' class="logout-btn">
+          {{empName}} || Logout 
+          <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div style="background: white;min-height: 96%;margin: 10px;border: 1px solid #efe1e1;">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div id="dashboardModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-xl" >
+    <div class="modal-content">
+      <div class="modal-header" style="padding: 10px !important;">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="btn  btn-sm text-white" [ngStyle]="{'background-color':button}" (click)="closeAnyModal('dashboardModal')">Close</button>
+      </div>
+      <div class="modal-body det-modal-body">
+        <iframe src="https://www.trinityapplab.in/SpaceTeleinfra/Graphv1/#/layout/dashboard" 
+        width="100%" height="100%" style="border:none;"></iframe>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+  

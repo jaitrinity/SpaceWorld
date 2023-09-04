@@ -1,0 +1,379 @@
+<!-- For production -->
+<mat-accordion class="example-headers-align" *ngIf="true">
+    <mat-expansion-panel [expanded]="true" *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Uptime Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">Month</label>
+                    <select class="form-control input-sm select-sm" [(ngModel)]="monthYear">
+                        <option value="">Select</option>
+                        <option *ngFor="let ml of monthList" value="{{ml.paramCode}}">{{ml.paramDesc}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(0)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Incident Management Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(1)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				PM Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(2)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Outage Category Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(3)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Meter Reading Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(4)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="true">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Meter Reading Report 2
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(15)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Training Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(5)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isOnMTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Punchpoint Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(6)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isSpaceAdmin">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				PTW Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(16)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isSpaceAdmin">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Supervisor Training
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <!-- <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div> -->
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(18)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="isSpaceAdmin">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Supervisor PTW
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <!-- <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div> -->
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(19)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true" *ngIf="isCBHTeam">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Site Survey Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(10)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+   
+</mat-accordion>
+
+ <!-- For Test -->
+<mat-accordion class="example-headers-align" *ngIf="false">
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Management Visit Report
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadReport(11)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+			<mat-panel-title>
+				Management Visit Report 2
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+        <div class="container-fluid" >
+            <div class="row" >
+                <div class="col-md-3">
+                    <label class="text-bold">Management Visit</label>
+                    <select class="form-control input-sm select-sm" [(ngModel)]="mgmtVisit">
+                        <option value="" [disabled]="true">Select</option>
+                        <option value="311">Operational Site</option>
+                        <option value="312">New Build Site</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="text-bold">From Date <span title="Reset From date" (click) = "fromDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control input-sm" (change)="toDate = ''"/>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="text-bold">To Date <span title="Reset To date" (click) = "toDate = ''"><i class="fa fa-refresh" aria-hidden="true"></i></span></label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control input-sm" [min]="fromDate"/>
+                </div>
+                <div class="col-md-3">
+                    <label style="color: transparent;display: block">0</label>
+                    <button class="btn btn-sm text-white text-bold tom-border-radius" [ngStyle]="{'background-color':button}" (click)="downloadMgmtReport(17)">
+                        <i class="fa fa-download"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
